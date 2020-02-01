@@ -61,5 +61,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.findByCompanyId(companyId);
 	}
 	
+	@Override
+	public boolean found(int employeeId) {
+		return employeeRepository.existsById(employeeId);
+	}
 	
 }

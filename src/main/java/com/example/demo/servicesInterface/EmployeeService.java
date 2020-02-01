@@ -12,4 +12,5 @@ public interface EmployeeService {
 	public List<Employee> getEmployees();
 	public List<Employee> getEmployeesByCompany(int companyId);
 	public Optional<Employee> getEmployee(int employeeId);
+	public boolean found(int employeeId);
 }

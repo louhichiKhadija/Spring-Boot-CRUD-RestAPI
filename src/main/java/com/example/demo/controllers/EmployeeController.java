@@ -1,7 +1,10 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entities.Employee;
+import com.example.demo.exceptions.ObjectNotFoundException;
 import com.example.demo.servicesInterface.EmployeeService;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,12 +25,13 @@ public class EmployeeController {
 	  }
 	@GetMapping(path="/company/{companyId}/employees")
 	public @ResponseBody ResponseEntity<?> getEmployeesByCompany(@PathVariable (value = "companyId") int id) {
-	 return new ResponseEntity<>(employeeService.getEmployeesByCompany(id), HttpStatus.OK);
+		
+		return new ResponseEntity<>(employeeService.getEmployeesByCompany(id), HttpStatus.OK);
 	}
 	
 	@PostMapping(path="company/{companyId}/addEmployee")
 	public @ResponseBody ResponseEntity<?> createEmployee(@PathVariable (value = "companyId") int companyId,
-			                                          @RequestBody Employee employee) {
+			                                         @RequestBody  @Valid Employee employee) {
 		employeeService.createEmployee(companyId,employee);
 	    return new ResponseEntity<>("Employee is created successfully", HttpStatus.CREATED);
 	}
@@ -37,6 +41,9 @@ public class EmployeeController {
 	public @ResponseBody ResponseEntity<?> updateEmployee(@PathVariable (value = "employeeId") int id,
 			                                              @RequestBody Employee employee) {
 		
+		if(!employeeService.found(id)) {
+			throw new ObjectNotFoundException("employee with id :"+ id+" not found");
+		}
 		employeeService.updateEmployee(id,employee);
 	    return new ResponseEntity<>("Employee is updated successfully", HttpStatus.OK);
 	}

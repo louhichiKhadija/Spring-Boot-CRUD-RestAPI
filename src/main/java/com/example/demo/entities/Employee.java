@@ -3,7 +3,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -17,9 +18,13 @@ public class Employee{
 	private String name;
 	
 	@Column(nullable=true)
+	@Min(value=18, message="Age must be at least 18 years old")
 	private int age;
 	
 	private String adress;
+	
+	@Email(message = "email should be a valid email")
+	private String email;
 	
 
 
@@ -95,6 +100,15 @@ public class Employee{
 	public void setCompany(Company company) {
 		this.company = company;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	
 	
 	
