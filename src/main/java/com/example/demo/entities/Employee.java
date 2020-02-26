@@ -23,6 +23,8 @@ public class Employee{
 	
 	private String adress;
 	
+	private String image;
+	
 	@Email(message = "email should be a valid email")
 	private String email;
 	
@@ -108,6 +110,16 @@ public class Employee{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	
 	
 	
 	

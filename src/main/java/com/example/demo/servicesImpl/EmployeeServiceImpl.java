@@ -66,4 +66,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.existsById(employeeId);
 	}
 	
+	@Override
+	public void addImage(int employeeId, String image) {
+		Employee employee=employeeRepository.findById(employeeId).get();
+		employee.setImage(image);
+		employeeRepository.save(employee);
+	}
+	
 }

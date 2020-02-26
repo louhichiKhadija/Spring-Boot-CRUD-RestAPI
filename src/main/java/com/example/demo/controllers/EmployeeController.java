@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Employee;
 import com.example.demo.exceptions.ObjectNotFoundException;
+import com.example.demo.utiles.FileStorageService;
 import com.example.demo.servicesInterface.EmployeeService;
 
 import javax.validation.Valid;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController()
@@ -17,6 +19,9 @@ public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService employeeService;
+	
+	@Autowired
+	private FileStorageService fileStorageService;
 	
 	
 	@GetMapping(path="/employees")
@@ -53,6 +58,17 @@ public class EmployeeController {
 		employeeService.deleteEmployee(id);
 		return new ResponseEntity<>("Employee is deleted successfully", HttpStatus.OK);
 	}
+	
+	
+	@PostMapping(path="/employees/{employeeId}/uploadImage")
+	public @ResponseBody ResponseEntity<?> addImage(@PathVariable (value = "employeeId") int id,
+			                                              @RequestParam("file") MultipartFile file) {
+		
+		String fileName = fileStorageService.storeFile(file);
+		employeeService.addImage(id, fileName);
+		return new ResponseEntity<>("Image is added successfully", HttpStatus.OK);
+	}
+		
 	
 	
 	

@@ -13,4 +13,5 @@ public interface EmployeeService {
 	public List<Employee> getEmployeesByCompany(int companyId);
 	public Optional<Employee> getEmployee(int employeeId);
 	public boolean found(int employeeId);
+	public void addImage(int employeeId, String image);
 }
